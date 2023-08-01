@@ -17,9 +17,9 @@ import static jakarta.persistence.TemporalType.TIMESTAMP;
 @Getter
 @Setter
 @Table(name = "users")
-
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,11 +38,4 @@ public class User {
 
 
 
-
-//    id – уникальный идентификатор пользователя, генерируется автоматически
-//    firstName - имя пользователя
-//    lastName - фамилия пользователя
-//    email - адрес электронной почты
-//    password - пароль
-//    createdAt - дата создания (регистрации) пользователя
 }
