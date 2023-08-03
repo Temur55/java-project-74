@@ -3,7 +3,9 @@ package hexlet.code.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.yaml.snakeyaml.events.Event;
@@ -17,8 +19,8 @@ import static jakarta.persistence.TemporalType.TIMESTAMP;
 @Getter
 @Setter
 @Table(name = "users")
-//@NoArgsConstructor
-//@AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +37,4 @@ public class User {
     @CreationTimestamp
     @Temporal(TIMESTAMP)
     private Date createdAt;
-
-
-
 }
