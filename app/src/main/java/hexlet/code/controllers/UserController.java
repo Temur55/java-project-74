@@ -1,11 +1,10 @@
 package hexlet.code.controllers;
 
 
-import hexlet.code.Dto.UserDto;
+import hexlet.code.dto.UserDto;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
-import hexlet.code.service.UserServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,7 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.List;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static hexlet.code.controllers.UserController.USER_CONTROLLER_PATH;
 import static org.springframework.http.HttpStatus.CREATED;
-
-
-import javax.swing.*;
 
 @RestController
 @RequestMapping ("${base-url}" + USER_CONTROLLER_PATH)

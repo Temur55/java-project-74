@@ -4,10 +4,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.DefaultClock;
-import java.util.Date;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.Map;
 
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;
 import static io.jsonwebtoken.impl.TextCodec.BASE64;
@@ -21,7 +22,7 @@ public class JWTHelper {
     private final Long clockSkewSec;
     private final Clock clock;
 
-    public JWTHelper(@Value("${jwt.issuer:spring_blog}") final String issuer,
+    public JWTHelper(@Value("${jwt.issuer:task_manager}") final String issuer,
                      @Value("${jwt.expiration-sec:86400}") final Long expirationSec,
                      @Value("${jwt.clock-skew-sec:300}") final Long clockSkewSec,
                      @Value("${jwt.secret:secret}") final String secret) {

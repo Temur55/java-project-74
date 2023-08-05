@@ -1,6 +1,6 @@
 package hexlet.code.service;
 
-import hexlet.code.Dto.UserDto;
+import hexlet.code.dto.UserDto;
 import hexlet.code.model.User;
 
 public interface UserService {
