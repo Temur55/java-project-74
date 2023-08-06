@@ -12,7 +12,7 @@ import jakarta.validation.constraints.Size;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
-    private long id;
+//    private long id; ????????????
 
     @NotBlank(message = "FirstName can't be empty")
     private String firstName;

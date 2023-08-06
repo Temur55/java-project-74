@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 @AllArgsConstructor
@@ -39,42 +41,18 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
-    public UserDto userToUserDto(User user) {
-        final UserDto userDto = new UserDto();
-
-        userDto.setId(user.getId());
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setEmail(user.getEmail());
-        return userDto;
-
+    public User getUserById(Long id) {
+        return userRepository.getReferenceById(id);
     }
 
     @Override
-    public User userDtoToUser(UserDto userDto) {
-        User user = new User();
-        if (userDto == null) {
-            return user;
-        }
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        return user;
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 
     @Override
-    public void checkUserAssociatedWithTasks(User user) {
-
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 
-    @Override
-    public String getCurrentUserName() {
-        return null;
-    }
-
-    @Override
-    public User getCurrentUser() {
-        return null;
-    }
 }

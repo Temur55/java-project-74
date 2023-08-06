@@ -3,15 +3,14 @@ package hexlet.code.service;
 import hexlet.code.dto.UserDto;
 import hexlet.code.model.User;
 
+import java.util.List;
+
 public interface UserService {
     User createUser(UserDto userDto) throws Exception;
     User updateUser(long id, UserDto userDto) throws Exception;
-    UserDto userToUserDto(User user);
-    User userDtoToUser(UserDto userDto);
+    User getUserById(Long id);
 
-    void checkUserAssociatedWithTasks(User user);
+    List<User> getUsers();
 
-    String getCurrentUserName();
-
-    User getCurrentUser();
+    void deleteUser(Long id);
 }

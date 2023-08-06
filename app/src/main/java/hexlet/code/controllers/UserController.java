@@ -36,8 +36,6 @@ public class UserController {
     public static final String USER_CONTROLLER_PATH = "/users";
     public static final String ID = "/{id}";
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private UserService userService;
 
     @Operation(summary = "Get user by id")
@@ -47,7 +45,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found")})
     @GetMapping(path = ID)
     public User getUser(@PathVariable long id) {
-        return userRepository.findById(id).orElseThrow();
+        return userService.getUserById(id);
     }
 
     @Operation(summary = "Get list of Users")
@@ -56,9 +54,7 @@ public class UserController {
     ))
     @GetMapping
     public List<User> getAllUsers() {
-        return userRepository.findAll()
-                .stream()
-                .toList();
+        return userService.getUsers();
     }
 
     @Operation(summary = "Create new user")
@@ -89,6 +85,6 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(path = ID)
     public void deleteUser(@PathVariable long id) {
-        userRepository.deleteById(id);
+        userService.deleteUser(id);
     }
 }
