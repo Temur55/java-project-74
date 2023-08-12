@@ -15,6 +15,4 @@ public class TaskStatusDto {
     @NotBlank(message = "Name is required")
     @Size(min = MIN_LENGTH, message = "Min length name is 1 char")
     private String name;
-
-//    private long id; ???????????
 }

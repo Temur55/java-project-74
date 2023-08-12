@@ -3,6 +3,7 @@ package hexlet.code.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,18 +23,26 @@ import static jakarta.persistence.TemporalType.TIMESTAMP;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
+    private static final int MIN_LENGTH_PAS = 3;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank
     private String firstName;
+
     @NotBlank
     private String lastName;
+
     @Column(unique = true)
     private String email;
+
     @NotBlank
     @JsonIgnore
+    @Size(min = MIN_LENGTH_PAS)
     private String password;
+
     @CreationTimestamp
     @Temporal(TIMESTAMP)
     private Date createdAt;

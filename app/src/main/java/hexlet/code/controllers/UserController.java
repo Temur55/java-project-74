@@ -16,6 +16,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,9 +35,11 @@ import static org.springframework.http.HttpStatus.CREATED;
 @AllArgsConstructor
 public class UserController {
     public static final String USER_CONTROLLER_PATH = "/users";
+    private static final String OWNER = "@userRepository.findById(#id).get().getEmail() == authentication.getName()";
     public static final String ID = "/{id}";
     @Autowired
     private UserService userService;
+
 
     @Operation(summary = "Get user by id")
     @ApiResponses({
@@ -71,6 +74,7 @@ public class UserController {
                     content = @Content(schema = @Schema(implementation = User.class))),
             @ApiResponse(responseCode = "404", description = "User not found"),
             @ApiResponse(responseCode = "422", description = "Incorrect user data")})
+    @PreAuthorize(OWNER)
     @PutMapping(path = ID)
     public User updateUser(@PathVariable long id, @RequestBody @Valid final UserDto userDto) throws Exception {
         return userService.updateUser(id, userDto);
@@ -83,6 +87,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found"),
             @ApiResponse(responseCode = "422", description = "User is connected to at least one task")})
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize(OWNER)
     @DeleteMapping(path = ID)
     public void deleteUser(@PathVariable long id) {
         userService.deleteUser(id);
