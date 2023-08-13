@@ -6,6 +6,7 @@ import hexlet.code.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -55,4 +56,11 @@ public class UserServiceImp implements UserService{
         userRepository.deleteById(id);
     }
 
+    public String getCurrentUserName() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    public User getCurrentUser() {
+        return userRepository.findByEmail(getCurrentUserName()).get();
+    }
 }

@@ -11,6 +11,8 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import static jakarta.persistence.TemporalType.TIMESTAMP;
 
@@ -50,9 +52,10 @@ public class Task {
     @Temporal(TIMESTAMP)
     private Date createdAt;
 
-//    @ManyToMany
-//    @JoinTable(name = "task_label",
-//            joinColumns = @JoinColumn(name = "task_id"),
-//            inverseJoinColumns = @JoinColumn(name = "label_id"))
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "task_label",
+            joinColumns = @JoinColumn(name = "task_id"),
+            inverseJoinColumns = @JoinColumn(name = "label_id"))
 //    private Set<Label> labels;
+    private List<Label> labels;
 }

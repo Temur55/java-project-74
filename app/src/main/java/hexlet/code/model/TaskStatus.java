@@ -3,7 +3,9 @@ package hexlet.code.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -14,6 +16,8 @@ import static jakarta.persistence.TemporalType.TIMESTAMP;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "statuses")
 public class TaskStatus {
     private static final int MIN_LENGTH = 1;

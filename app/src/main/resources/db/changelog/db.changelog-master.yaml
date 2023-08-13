@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: 1691239789609-1
+    id: 1691910512593-1
     author: vitalii (generated)
     changes:
     - createTable:
@@ -10,29 +10,18 @@ databaseChangeLog:
             constraints:
               nullable: false
               primaryKey: true
-              primaryKeyName: usersPK
+              primaryKeyName: labelsPK
             name: id
             type: BIGINT
         - column:
             name: created_at
             type: TIMESTAMP(6)
         - column:
-            name: email
+            name: name
             type: VARCHAR(255)
-        - column:
-            name: first_name
-            type: VARCHAR(255)
-        - column:
-            name: last_name
-            type: VARCHAR(255)
-        - column:
-            name: password
-            type: VARCHAR(255)
-        tableName: users
-
-databaseChangeLog:
+        tableName: labels
 - changeSet:
-    id: 1691831279152-1
+    id: 1691910512593-2
     author: vitalii (generated)
     changes:
     - createTable:
@@ -53,7 +42,24 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: statuses
 - changeSet:
-    id: 1691831279152-2
+    id: 1691910512593-3
+    author: vitalii (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: task_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: label_id
+            type: BIGINT
+        tableName: task_label
+- changeSet:
+    id: 1691910512593-4
     author: vitalii (generated)
     changes:
     - createTable:
@@ -86,7 +92,7 @@ databaseChangeLog:
             type: BIGINT
         tableName: tasks
 - changeSet:
-    id: 1691831279152-3
+    id: 1691910512593-5
     author: vitalii (generated)
     changes:
     - createTable:
@@ -116,7 +122,20 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: users
 - changeSet:
-    id: 1691831279152-4
+    id: 1691910512593-6
+    author: vitalii (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: task_id
+        baseTableName: task_label
+        constraintName: FK45j1msvaecla2batb854mv44o
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: tasks
+        validate: true
+- changeSet:
+    id: 1691910512593-7
     author: vitalii (generated)
     changes:
     - addForeignKeyConstraint:
@@ -129,7 +148,20 @@ databaseChangeLog:
         referencedTableName: users
         validate: true
 - changeSet:
-    id: 1691831279152-5
+    id: 1691910512593-8
+    author: vitalii (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: label_id
+        baseTableName: task_label
+        constraintName: FKdcng3qpmqco6u3ofi7i939bnx
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: labels
+        validate: true
+- changeSet:
+    id: 1691910512593-9
     author: vitalii (generated)
     changes:
     - addForeignKeyConstraint:
@@ -142,7 +174,7 @@ databaseChangeLog:
         referencedTableName: statuses
         validate: true
 - changeSet:
-    id: 1691831279152-6
+    id: 1691910512593-10
     author: vitalii (generated)
     changes:
     - addForeignKeyConstraint:

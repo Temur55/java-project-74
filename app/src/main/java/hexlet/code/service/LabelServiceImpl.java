@@ -1,0 +1,56 @@
+package hexlet.code.service;
+
+import hexlet.code.dto.LabelDto;
+import hexlet.code.model.Label;
+import hexlet.code.repository.LabelRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
+
+@Service
+//@Transactional
+@AllArgsConstructor
+public class LabelServiceImpl implements LabelService {
+
+    @Autowired
+    private final LabelRepository labelRepository;
+
+    @Override
+    public Label createNewLabel(LabelDto labelDto) {
+        Label label = new Label();
+        label.setName(labelDto.getName());
+        return labelRepository.save(label);
+    }
+
+    @Override
+    public Label updateLabel(long id, LabelDto labelDto) {
+        Label labelToUpdate = labelRepository.getReferenceById(id);
+        labelToUpdate.setName(labelDto.getName());
+        return labelRepository.save(labelToUpdate);
+    }
+
+    @Override
+    public void deletelabel(Long id) {
+        labelRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Label> getAll() {
+        return labelRepository.findAll();
+    }
+
+    @Override
+    public Label getLabelById(Long id) {
+//        return labelRepository.getReferenceById(id);
+        return  labelRepository.findById(id).orElseThrow();
+    }
+
+    @Override
+    public List<Label> getAllLabelById(List<Long> ids) {
+        return labelRepository.findAllById(ids);
+    }
+}
