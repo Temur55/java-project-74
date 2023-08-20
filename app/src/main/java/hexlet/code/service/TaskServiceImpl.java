@@ -1,5 +1,6 @@
 package hexlet.code.service;
 
+import com.querydsl.core.types.Predicate;
 import hexlet.code.dto.TaskDto;
 import hexlet.code.model.Label;
 import hexlet.code.model.Task;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 //@Transactional
@@ -27,15 +30,40 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private final LabelService labelService;
 
+//    @Override
+//    public Task createNewTask(TaskDto taskDto) {
+//        Task task = modificationTask(taskDto);
+//        return taskRepository.save(task);
+//    }
+//
+//    @Override
+//    public Task updateTask(Long id, TaskDto taskDto) {
+//        Task task = modificationTask(taskDto);
+//        return taskRepository.save(task);
+//    }
+
     @Override
     public Task createNewTask(TaskDto taskDto) {
-        Task task = modificationTask(taskDto);
-        return taskRepository.save(task);
+        Task taskNew = new Task();
+        Task taskResult = modificationTask(taskDto, taskNew);
+        return taskRepository.save(taskResult);
     }
 
     @Override
     public Task updateTask(Long id, TaskDto taskDto) {
-        Task task = modificationTask(taskDto);
+        Task task = taskRepository.getReferenceById(id);
+        User author = userService.getCurrentUser();
+        User executor = userService.getUserById(taskDto.getExecutorId());
+        TaskStatus status = statusService.getStatus(taskDto.getTaskStatusId());
+//        List<Label> labels = labelService.getAllLabelById(taskDto.getLabelIds());
+        List<Label> labels = labelService.getAllLabelById(taskDto.getLabelIds());
+
+        task.setName(taskDto.getName());
+        task.setAuthor(author);
+        task.setExecutor(executor);
+        task.setDescription(taskDto.getDescription());
+        task.setTaskStatus(status);
+        task.setLabels(labels);
         return taskRepository.save(task);
     }
 
@@ -50,12 +78,18 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task getTaskById(Long id) {
-        return taskRepository.getReferenceById(id);
+    public List<Task> getAll(Predicate predicate) {
+//        return taskRepository.findAll(predicate);
+        return StreamSupport.stream(taskRepository.findAll(predicate).spliterator(), false)
+                .collect(Collectors.toList());
     }
 
-    private Task modificationTask(TaskDto taskDto) {
-        Task task = new Task();
+    @Override
+    public Task getTaskById(Long id) {
+        return taskRepository.findById(id).orElseThrow();
+    }
+
+    private Task modificationTask(TaskDto taskDto, Task task) {
         User author = userService.getCurrentUser();
         User executor = userService.getUserById(taskDto.getExecutorId());
         TaskStatus status = statusService.getStatus(taskDto.getTaskStatusId());

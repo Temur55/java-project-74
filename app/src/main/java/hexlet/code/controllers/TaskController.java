@@ -1,5 +1,6 @@
 package hexlet.code.controllers;
 
+import com.querydsl.core.types.Predicate;
 import hexlet.code.dto.TaskDto;
 import hexlet.code.model.Task;
 import hexlet.code.repository.TaskRepository;
@@ -16,9 +17,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import static hexlet.code.controllers.TaskController.TASK_PATH;
+import static org.springframework.http.HttpStatus.CREATED;
+
 @RestController
 @AllArgsConstructor
-@RequestMapping("${base-url}" + TaskController.TASK_PATH)
+@RequestMapping("${base-url}" + TASK_PATH)
 public class TaskController {
     public static final String TASK_PATH = "/tasks";
     private static final String OWNER =
@@ -35,7 +39,7 @@ public class TaskController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Task.class))}),
             @ApiResponse(responseCode = "404", description = "Task not found")})
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(CREATED)
     @PostMapping()
     public Task createNewTask(@RequestBody TaskDto taskDto) {
         return taskService.createNewTask(taskDto);
@@ -45,14 +49,14 @@ public class TaskController {
     @ApiResponse(responseCode = "200", description = "All tasks are found",
             content = @Content(schema = @Schema(implementation = Task.class)))
     @GetMapping()
-    public Iterable<Task> getAllTasks() {
-        return taskService.getAll();
+    public Iterable<Task> getAllTasks(@QuerydslPredicate Predicate predicate) {
+        return predicate == null ? taskService.getAll() : taskService.getAll(predicate);
     }
 
     @Operation(summary = "Get task by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "The task is found",
-                    content = {@Content(mediaType = "application/jsom", schema = @Schema(implementation = Task.class))}),
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Task.class))}),
             @ApiResponse(responseCode = "404", description = "No such task found")})
     @GetMapping(path = ID)
     public Task getTaskById(@PathVariable Long id) {

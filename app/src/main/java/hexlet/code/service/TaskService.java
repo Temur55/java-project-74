@@ -1,5 +1,6 @@
 package hexlet.code.service;
 
+import com.querydsl.core.types.Predicate;
 import hexlet.code.dto.TaskDto;
 import hexlet.code.model.Task;
 
@@ -10,5 +11,6 @@ public interface TaskService {
     Task updateTask(Long id, TaskDto taskDto);
     void deleteTask(Long id);
     List<Task> getAll();
+    List<Task> getAll(Predicate predicate);
     Task getTaskById(Long id);
 }
