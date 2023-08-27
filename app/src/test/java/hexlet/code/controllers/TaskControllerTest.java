@@ -2,10 +2,7 @@ package hexlet.code.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import hexlet.code.config.SpringConfigTests;
-import hexlet.code.model.User;
 import hexlet.code.utils.TestUtils;
-import hexlet.code.dto.TaskDto;
-import hexlet.code.dto.TaskDto;
 import hexlet.code.dto.TaskDto;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.TaskStatusRepository;
@@ -21,12 +18,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static hexlet.code.config.SpringConfigTests.TEST_PROFILE;
@@ -180,5 +175,4 @@ public class TaskControllerTest {
 
         assertEquals(taskRepository.findAll().size(), 1);
     }
-
 }
