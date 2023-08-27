@@ -21,7 +21,7 @@ jobs:
         uses: paambaati/codeclimate-action@v3.2.0
         env:
           CC_TEST_REPORTER_ID: ${{secrets.PROJECT73}}
-          JACOCO_SOURCE_PATH: src/main/java
+          JACOCO_SOURCE_PATH: app/src/main/java
         with:
           coverageCommand: make report
           uses: cc-test-reporter after-build
