@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 @Transactional
 @AllArgsConstructor
-public class UserServiceImp implements UserService{
+public class UserServiceImp implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -43,8 +43,13 @@ public class UserServiceImp implements UserService{
 
     @Override
     public User getUserById(Long id) {
-        return userRepository.getReferenceById(id);
+        return userRepository.findById(id).orElseThrow();
     }
+
+//    @Override
+//    public User getUserById(Long id) {
+//        return userRepository.getReferenceById(id);
+//    }
 
     @Override
     public List<User> getUsers() {

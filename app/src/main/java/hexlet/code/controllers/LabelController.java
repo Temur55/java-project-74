@@ -2,7 +2,6 @@ package hexlet.code.controllers;
 
 import hexlet.code.dto.LabelDto;
 import hexlet.code.model.Label;
-import hexlet.code.model.Task;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.service.LabelService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,7 +12,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -35,8 +42,8 @@ public class LabelController {
     @ApiResponse(responseCode = "201", description = "Label created")
     @PostMapping
     @ResponseStatus(CREATED)
-    public Label createNew(@RequestBody @Valid final LabelDto LabelDto) {
-        return labelService.createNewLabel(LabelDto);
+    public Label createNew(@RequestBody @Valid final LabelDto labelDto) {
+        return labelService.createNewLabel(labelDto);
     }
 
     @Operation(summary = "Get all labels")
@@ -63,8 +70,8 @@ public class LabelController {
             @ApiResponse(responseCode = "404", description = "Label with that id not found")
     })
     @PutMapping(ID)
-    public Label update(@PathVariable final long id, @RequestBody final LabelDto LabelDto) {
-        return labelService.updateLabel(id, LabelDto);
+    public Label update(@PathVariable final long id, @RequestBody final LabelDto labelDto) {
+        return labelService.updateLabel(id, labelDto);
     }
 
     @Operation(summary = "Delete a label")

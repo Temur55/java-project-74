@@ -6,13 +6,10 @@ import hexlet.code.repository.LabelRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
-//@Transactional
 @AllArgsConstructor
 public class LabelServiceImpl implements LabelService {
 
@@ -28,7 +25,7 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public Label updateLabel(long id, LabelDto labelDto) {
-        Label labelToUpdate = labelRepository.getReferenceById(id);
+        Label labelToUpdate = labelRepository.findById(id);
         labelToUpdate.setName(labelDto.getName());
         return labelRepository.save(labelToUpdate);
     }
@@ -45,7 +42,6 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public Label getLabelById(Long id) {
-//        return labelRepository.getReferenceById(id);
         return  labelRepository.findById(id).orElseThrow();
     }
 

@@ -7,18 +7,16 @@ import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.model.User;
 import hexlet.code.repository.TaskRepository;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-//@Transactional
 @AllArgsConstructor
 public class TaskServiceImpl implements TaskService {
     @Autowired
@@ -29,18 +27,6 @@ public class TaskServiceImpl implements TaskService {
     private final TaskStatusService statusService;
     @Autowired
     private final LabelService labelService;
-
-//    @Override
-//    public Task createNewTask(TaskDto taskDto) {
-//        Task task = modificationTask(taskDto);
-//        return taskRepository.save(task);
-//    }
-//
-//    @Override
-//    public Task updateTask(Long id, TaskDto taskDto) {
-//        Task task = modificationTask(taskDto);
-//        return taskRepository.save(task);
-//    }
 
     @Override
     public Task createNewTask(TaskDto taskDto) {
@@ -53,10 +39,15 @@ public class TaskServiceImpl implements TaskService {
     public Task updateTask(Long id, TaskDto taskDto) {
         Task task = taskRepository.getReferenceById(id);
         User author = userService.getCurrentUser();
-        User executor = userService.getUserById(taskDto.getExecutorId());
+        User executor = null;
+        if (taskDto.getExecutorId() != null) {
+            executor = userService.getUserById(taskDto.getExecutorId());
+        }
         TaskStatus status = statusService.getStatus(taskDto.getTaskStatusId());
-//        List<Label> labels = labelService.getAllLabelById(taskDto.getLabelIds());
-        List<Label> labels = labelService.getAllLabelById(taskDto.getLabelIds());
+        List<Label> labels = new ArrayList<>();
+        if (taskDto.getLabelIds() != null) {
+            labels = labelService.getAllLabelById(taskDto.getLabelIds());
+        }
 
         task.setName(taskDto.getName());
         task.setAuthor(author);
@@ -79,7 +70,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getAll(Predicate predicate) {
-//        return taskRepository.findAll(predicate);
         return StreamSupport.stream(taskRepository.findAll(predicate).spliterator(), false)
                 .collect(Collectors.toList());
     }
@@ -91,10 +81,15 @@ public class TaskServiceImpl implements TaskService {
 
     private Task modificationTask(TaskDto taskDto, Task task) {
         User author = userService.getCurrentUser();
-        User executor = userService.getUserById(taskDto.getExecutorId());
+        User executor = null;
+        if (taskDto.getExecutorId() != null) {
+            executor = userService.getUserById(taskDto.getExecutorId());
+        }
         TaskStatus status = statusService.getStatus(taskDto.getTaskStatusId());
-//        List<Label> labels = labelService.getAllLabelById(taskDto.getLabelIds());
-        List<Label> labels = labelService.getAllLabelById(taskDto.getLabelIds());
+        List<Label> labels = new ArrayList<>();
+        if (taskDto.getLabelIds() != null) {
+            labels = labelService.getAllLabelById(taskDto.getLabelIds());
+        }
 
         task.setName(taskDto.getName());
         task.setAuthor(author);

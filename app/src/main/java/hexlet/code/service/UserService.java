@@ -2,7 +2,6 @@ package hexlet.code.service;
 
 import hexlet.code.dto.UserDto;
 import hexlet.code.model.User;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public interface UserService {
 
     void deleteUser(Long id);
 
-    public String getCurrentUserName();
+    String getCurrentUserName();
 
-    public User getCurrentUser();
+    User getCurrentUser();
 }

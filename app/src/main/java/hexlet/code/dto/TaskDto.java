@@ -2,15 +2,15 @@ package hexlet.code.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class TaskDto {
@@ -24,13 +24,6 @@ public class TaskDto {
 
     @NotNull(message = "Task status should not be empty")
     private Long taskStatusId;
-
-//    @NotNull(message = "Author should not be empty")
-//    private Long authorId;
-
     private Long executorId;
-
-//    private Set<Long> labelIds;
     private List<Long> labelIds;
 }
-
