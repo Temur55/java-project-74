@@ -1,5 +1,4 @@
-setup:
-	gradle wrapper --gradle-version 8.2
+.DEFAULT_GOAL := build-run
 
 clean:
 	./gradlew clean
@@ -14,13 +13,13 @@ start-prod:
 	./gradlew bootRun --args='--spring.profiles.active=prod'
 
 install:
-	./gradlew installDist
+	./gradlew clean install
 
-start-dist:
+run-dist:
 	./build/install/app/bin/app
 
-lint:
-	./gradlew checkstyleMain checkstyleTest
+run:
+	./gradlew run
 
 test:
 	./gradlew test
@@ -28,9 +27,11 @@ test:
 report:
 	./gradlew jacocoTestReport
 
+lint:
+	./gradlew checkstyleMain checkstyleTest
 
-check-updates:
-	./gradlew dependencyUpdates
+update-deps:
+	./gradlew useLatestVersions
 
 generate-migrations:
 	gradle diffChangeLog
@@ -38,5 +39,6 @@ generate-migrations:
 db-migrate:
 	./gradlew update
 
+build-run: build run
 
 .PHONY: build
