@@ -1,5 +1,3 @@
-.DEFAULT_GOAL := build-run
-
 clean:
 	./gradlew clean
 
@@ -13,13 +11,13 @@ start-prod:
 	./gradlew bootRun --args='--spring.profiles.active=prod'
 
 install:
-	./gradlew clean install
+	./gradlew installDist
 
-run-dist:
+start-dist: clean install
 	./build/install/app/bin/app
 
-run:
-	./gradlew run
+lint:
+	./gradlew checkstyleMain checkstyleTest
 
 test:
 	./gradlew test
@@ -27,11 +25,8 @@ test:
 report:
 	./gradlew jacocoTestReport
 
-lint:
-	./gradlew checkstyleMain checkstyleTest
-
-update-deps:
-	./gradlew useLatestVersions
+check-updates:
+	./gradlew dependencyUpdates
 
 generate-migrations:
 	gradle diffChangeLog
@@ -39,6 +34,5 @@ generate-migrations:
 db-migrate:
 	./gradlew update
 
-build-run: build run
 
 .PHONY: build
